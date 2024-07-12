@@ -1,34 +1,35 @@
-import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import RBSheet, { RBSheetProps } from "react-native-raw-bottom-sheet";
+import React, {useRef} from 'react';
+import {View, Button} from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
-interface BottomSheetProps extends RBSheetProps {};
-
-const Example: React.FC<BottomSheetProps> = () => {
-  const sheetRef = useRef<RBSheet>(null);
+export default function Example() {
+  const refRBSheet = useRef();
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <TouchableOpacity onPress={() => sheetRef.current!.open()}>
-        <Text>Open Bottom Sheet</Text>
-      </TouchableOpacity>
+    <View style={{flex: 1}}>
+      <Button
+        title="OPEN BOTTOM SHEET"
+        onPress={() => refRBSheet.current.Open()}
+      />
       <RBSheet
-        ref={sheetRef}
-        height={300}
-        duration={250}
+        ref={refRBSheet}
+        useNativeDriver={true}
         customStyles={{
-          container: {
-            justifyContent: "center",
-            alignItems: "center"
-          }
+          wrapper: {
+            backgroundColor: 'transparent',
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
         }}
-      >
-        <View style={{ backgroundColor: "white", padding: 20 }}>
-          <Text>This is the content of the bottom sheet!</Text>
-        </View>
+        customModalProps={{
+          animationType: 'slide',
+          statusBarTranslucent: true,
+        }}
+        customAvoidingViewProps={{
+          enabled: false,
+        }}>
       </RBSheet>
     </View>
   );
-};
-
-export default Example;
+}
